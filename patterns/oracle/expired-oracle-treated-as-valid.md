@@ -1,3 +1,5 @@
+# expired-oracle-treated-as-valid
+
 **Pattern:** When an oracle version is expired, the code should return valid = false, but instead returns valid = true, which keeps orders open that should have been invalidated.
 
 **Sniff test:** When I see a validity flag derived from price == 0 (or any sentinel value), I ask: is there any code path that writes a non-zero fallback price in the case the flag is meant to catch? If yes, the flag is defeated, the check is a lie.

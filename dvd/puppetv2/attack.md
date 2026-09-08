@@ -28,7 +28,22 @@ I can swap my DVT for WETH to push the Uniswap price down, then use the lower pr
 
 ## poc
 
-[test code — coming]
+```
+function test_puppetV2() public checkSolvedByPlayer {
+        Exploit exploit = new Exploit{value: PLAYER_INITIAL_ETH_BALANCE}(
+            token,
+            lendingPool,
+            uniswapV2Router,
+            weth,
+            recovery
+        );
+
+        token.transfer(address(exploit), PLAYER_INITIAL_TOKEN_BALANCE);
+
+        exploit.attack(POOL_INITIAL_TOKEN_BALANCE);
+    }
+
+```
 
 ## foundry-only vs mainnet-real
 
@@ -40,6 +55,8 @@ mainnet-realistic version needs a single-tx attacker contract:
 ## summary:
 
 The attack manipulates the Uniswap V2 spot price that Puppet uses as its oracle. I start with 20 ETH and 10,000 DVT, sell my DVT into the WETH/DVT pool to make DVT appear much cheaper, then use the lower oracle price to borrow DVT with less WETH collateral. I can sell the borrowed DVT back into the pool to push the price even lower, allowing me to borrow progressively larger amounts until I can drain the pool's 1,000,000 DVT.
+
+## diagram:
 
 START
 │
