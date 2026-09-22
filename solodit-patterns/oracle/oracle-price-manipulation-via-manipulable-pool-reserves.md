@@ -1,4 +1,4 @@
-# oracle-price-manipulation-via-manipulable-pool-reserves
+# Oracle Price Manipulation via Manipulablep Pool Reserves
 
 **Pattern:** Using Pool Reserves to Calculate a Price. The protocol uses the pool's current reserves to calculate the price of an LP token. An attacker can temporarily change those reserves with a large trade, causing the protocol to calculate the wrong price.
 

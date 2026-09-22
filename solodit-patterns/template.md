@@ -11,3 +11,5 @@
 ## Instances seen
 
 - [findings list]
+
+## Flinch trigger
